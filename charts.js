@@ -61,6 +61,7 @@ function buildCharts(sample) {
     var samples = data.samples;
     // 4. Create a variable that filters the samples for the object with the desired sample number.
     var resultArray = samples.filter(sampleObj => sampleObj.id == sample);
+
     //  5. Create a variable that holds the first sample in the array.
     var result = resultArray[0];
 
@@ -96,8 +97,8 @@ function buildCharts(sample) {
     Plotly.newPlot("bar", barData, barLayout);
 
 
-//Deliverable 2 Bubble Chart
-// Bar and Bubble charts
+  //Deliverable 2 Bubble Chart
+  // Bar and Bubble charts
 
     // 1. Create the trace for the bubble chart.
     var bubbleData = [
@@ -127,5 +128,51 @@ function buildCharts(sample) {
 
     // 3. Use Plotly to plot the data with the layout.
     Plotly.newPlot("bubble", bubbleData, bubbleLayout); 
+
+
+//Deliverable 3
+    // 1. Create a variable that filters the metadata array for the object with the desired sample number.
+    var metadataArray = data.metadata.filter(sampleObj => sampleObj.id == sample);
+  
+    // 2. Create a variable that holds the first sample in the metadata array.
+    var metadata = metadataArray[0];
+
+    // 3. Create a variable that holds the washing frequency.
+    var frequency = parseFloat(metadata.wfreq);
+   
+    
+    // 4. Create the trace for the gauge chart.
+    var gaugeData = [
+      {
+        domain: { x: [0, 1], y: [0, 1] },
+        value: frequency,
+        title: { text: "<b>Belly Button Washing Frequency</b> <br> Scrubs per Week"},
+        type: "indicator",
+        mode: "gauge+number",
+        gauge: {
+          axis: { range: [null, 10] },
+          bar: { color: "navy"},
+          steps: [
+            { range: [0, 2], color: "cyan" },
+            { range: [2, 4], color: "teal" },
+            { range: [4, 6], color: "dodgerblue" },
+            { range: [6, 8], color: "violet" },
+            { range: [8, 10], color: "hotpink" }
+          ],
+        }
+      }
+
+     
+    ];
+    
+    // 5. Create the layout for the gauge chart.
+    var gaugeLayout = { 
+      width: 500, 
+      height: 425, 
+      margin: { t: 0, b: 0 }
+    };
+
+    // 6. Use Plotly to plot the gauge data and layout.
+    Plotly.newPlot("gauge", gaugeData, gaugeLayout);
   });
 }
